@@ -6,6 +6,8 @@
 body {
   height: 100vh;
   transition: 500ms;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 @font-face {
   font-family: "CustomFont";
@@ -116,7 +118,8 @@ button {
   justify-content: space-between;
   margin-top: -50px;
 }
-.container_p p {
+.container_p p,
+.container_p_ p {
   width: 7px;
   height: 7px;
   background: rgba(48, 48, 48, 0.07);
@@ -128,9 +131,10 @@ u {
   border-radius: 4px 4px 0px 0px;
   width: 4px;
   background: #00000000;
-  border-top: 2px solid rgba(71, 71, 71, 0.29);
-  border-left: 2px solid rgba(71, 71, 71, 0.29);
-  border-right: 2px solid rgba(71, 71, 71, 0.29);
+  border-top: 2px solid rgba(71, 71, 71, 0.4);
+  border-left: 2px solid rgba(71, 71, 71, 0.4);
+  border-right: 2px solid rgba(71, 71, 71, 0.4);
+  box-shadow: 0px 15px 10 black;
   margin-left: 0px;
   margin-top: -11px;
   position: absolute;

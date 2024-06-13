@@ -1,15 +1,17 @@
-const ip_ = document.getElementById('ip_');
+const host_ = document.getElementById('host_');
 const agence_ = document.getElementById('agence_');
-const code_ = document.getElementById('code_');
+const client_id_ = document.getElementById('code_');
 const btn = document.getElementById('btn_');
 
 function checkInput() {
-    if (ip_.value == "" || agence_.value == "" || code_.value == "") {
+    if (host_.value == "" ||
+        agence_.value == "" ||
+        client_id_.value == "") {
         btn.style.background = "#555";
     } else {
         if (code_.value.length > 6) {
             btn.style.background = '#0b773b'
-            appelerFonctionPHP();
+            // appelerFonctionPHP();
             // window.location.href = "./controller/getAccount.php";
         }
     }
@@ -21,7 +23,6 @@ function appelerFonctionPHP() {
     xhr.onload = function () {
         if (xhr.status === 200) {
             console.log('Réponse du serveur : ' + xhr.responseText);
-            // Traitez la réponse ici
         }
     };
 
@@ -30,15 +31,20 @@ function appelerFonctionPHP() {
 
 
 function envoyerDonnees() {
+    var data = {
+        host: host_.value,
+        dataBase: agence_.value,
+        table: client_id_.value,
+    };
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr); // Affichez la réponse du serveur
+            console.log(xhr.response);
         }
     };
     xhr.open("POST", "./controller/auth_controller.php?action=test", true);
-    xhr.setRequestHeader("Content-Type", "application/json"); // Spécifiez le type de contenu
+    xhr.setRequestHeader("Content-Type", "application/json");
 
-    var donnees = JSON.stringify({ nom: "Jean", age: 30 }); // Convertir les données en JSON
+    var donnees = JSON.stringify(data);
     xhr.send(donnees);
 }

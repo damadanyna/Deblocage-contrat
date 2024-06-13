@@ -11,10 +11,10 @@
   z-index: 20;
 }
 .anim-expand {
-  animation: expand 1s forwards;
+  animation: expand 0.7s forwards;
 }
 .out-anim-expand {
-  animation: out-expand 1s forwards;
+  animation: out-expand 0.7s forwards;
 }
 
 @keyframes expand {
