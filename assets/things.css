@@ -1,0 +1,17 @@
+.show-thing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.267);
+  justify-content: center;
+  place-items: center;
+  /* width: 100vw; */
+  width: 0px;
+  z-index: 20;
+}
+
+.formulaire_history {
+}
