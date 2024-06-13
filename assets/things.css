@@ -3,15 +3,109 @@
   top: 0;
   left: 0;
   height: 100vh;
+  width: 130px;
   display: flex;
+  justify-content: end;
   backdrop-filter: blur(5px);
-  background: rgba(0, 0, 0, 0.267);
-  justify-content: center;
   place-items: center;
-  /* width: 100vw; */
-  width: 0px;
   z-index: 20;
 }
+.anim-expand {
+  animation: expand 1s forwards;
+}
+.out-anim-expand {
+  animation: out-expand 1s forwards;
+}
 
-.formulaire_history {
+@keyframes expand {
+  from {
+    width: 130px;
+  }
+  to {
+    width: 100vw;
+  }
+}
+@keyframes out-expand {
+  from {
+    width: 100vw;
+  }
+  to {
+    width: 130px;
+  }
+}
+
+.popup-expanded {
+  width: 100vw; /* Définit la largeur à 100vw lorsque la classe .popup-expanded est présente */
+}
+
+.c_thing {
+  display: none;
+}
+
+.icon_thing {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  place-items: center;
+  justify-content: start;
+  cursor: pointer;
+  font-size: 7rem;
+}
+.icon_thing:hover {
+  background: #00000034;
+}
+.icon_thing:hover > .bar_content {
+  animation-delay: 500ms;
+  transform: scale(1.5);
+}
+.icon_thing:hover > .bar_content > .bar_h {
+  transform: rotateZ(-130deg);
+  margin-top: -9px;
+  background: white;
+}
+.icon_thing:hover > .bar_content > .bar_v {
+  transform: rotateZ(130deg);
+  margin-top: 9px;
+  background: white;
+}
+.icon_thing:hover > .bar_content > .center_h {
+  opacity: 0;
+}
+.icon_ {
+  font-size: 7rem;
+  opacity: 0;
+  display: none;
+}
+.bar_content {
+  margin: 30px 70px;
+  position: relative;
+}
+.bar_h,
+.center_h,
+.bar_v {
+  position: absolute;
+  width: 25px;
+  height: 3px;
+  background: #4c4c4c;
+  border-radius: 5px;
+}
+.bar_h {
+  margin-top: -5px;
+}
+.center_h {
+  margin-top: 5px;
+}
+.bar_v {
+  margin-top: 15px;
+}
+
+.masque {
+  display: flex;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 0, 0, 0);
+}
+.popup {
+  transition: width 0.3s ease; /* Ajoute une transition de 0.3 seconde avec un effet de transition "ease" à la propriété "width" */
 }
