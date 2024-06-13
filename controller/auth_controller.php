@@ -1,5 +1,5 @@
 <?php
-require './controller/config.php';
+// require './controller/config.php';
 function updata($con, $table, $vcode)
 {
     try {
@@ -37,9 +37,13 @@ function getData($con, $table, $vcode)
     }
 }
 
+if (isset($_GET['action']) && $_GET['action'] === 'test') {
+    test();
+}
+
 function test()
 {
-    return json_encode('bonjour');
+    echo 'iosos';
 };
 
-$con->close();
+// $con->close();

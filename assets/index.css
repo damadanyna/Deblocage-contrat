@@ -9,7 +9,7 @@ body {
 }
 @font-face {
   font-family: "CustomFont";
-  src: url("../fonts/custom-font.ttf");
+  src: url("./fonts/Nunito-Medium.ttf");
   font-weight: normal;
   font-style: normal;
 }

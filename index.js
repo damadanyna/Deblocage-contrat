@@ -27,3 +27,18 @@ function appelerFonctionPHP() {
 
     xhr.send();
 }
+
+
+function envoyerDonnees() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr); // Affichez la réponse du serveur
+        }
+    };
+    xhr.open("POST", "./controller/auth_controller.php?action=test", true);
+    xhr.setRequestHeader("Content-Type", "application/json"); // Spécifiez le type de contenu
+
+    var donnees = JSON.stringify({ nom: "Jean", age: 30 }); // Convertir les données en JSON
+    xhr.send(donnees);
+}
