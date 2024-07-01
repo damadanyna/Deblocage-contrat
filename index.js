@@ -1,19 +1,22 @@
 
-
 function findAccount(data, config) {
 
     var xhr = new XMLHttpRequest();
+
     xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.response);
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log(xhr.response);
+            } else {
+                console.error(`Error: ${xhr.status}`);
+            }
         }
     };
     xhr.open("POST", "./controller/getAccount.php?action=getData", true);
     xhr.setRequestHeader("Content-Type", "application/json");
-
     var donnees = JSON.stringify(config);
     xhr.send(donnees);
-    xhr.response(data)
+
 }
 
 function appelerFonctionPHP() {
@@ -45,5 +48,4 @@ function envoyerDonnees() {
     var donnees = JSON.stringify(data);
     xhr.send(donnees);
 }
-
 export { findAccount };

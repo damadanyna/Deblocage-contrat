@@ -1,6 +1,4 @@
 <?php
-require './controller/config.php';
-require './auth_controller.php';
 function updata($con, $table, $vcode)
 {
     try {
@@ -18,11 +16,9 @@ function updata($con, $table, $vcode)
         echo "Error: " . $th->getMessage();
     }
 }
-
-
-function getData($con, $table, $vcode)
+function getData()
 {
-    echo json_encode($_POST);
+    echo json_encode(["status" => "success", "message" => "Update successful!"]);
     // creat_cnx($con,$table,$vcode);
     die("fin");
     try {
@@ -46,4 +42,26 @@ function test()
     return json_encode('bonjour');
 };
 
-$con->close();
+
+
+
+function creat_cnx($host_, $user_, $pwd_, $db_)
+{
+    $user_con = new mysqli($host_, $user_, $pwd_, $db_);
+    if ($user_con->connect_error) {
+        // Ajoutez un message de débogage pour la connexion échouée
+        error_log("Connexion échouée: " . $user_con->connect_error);
+        die("Connection failed: " . $user_con->connect_error);
+    }
+    return $user_con;
+}
+
+// Gestion de la requête
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'getData') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $table = "";
+    $vcode = "";
+
+    // Assuming you have a database connection $con
+    getData();
+}
