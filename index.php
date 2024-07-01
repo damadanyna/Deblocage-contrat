@@ -106,12 +106,15 @@ require './data.php'
                 <span class="label_in_">Solde Minimum</span>
                 <h3 id="v_code">1.200.000 ar</h3>
             </div>
-            <button style="margin-top:30px;padding:10px 0px; width:300px">Débloquer</button>
+            <div class="" style="display: flex; flex-direction:column">
+
+                <button onclick="envoyerDonnees()" style="margin-top:30px;padding:10px 0px; width:300px;background:#0b773b;">Débloquer</button>
+                <button id="annuler" style="margin-top:10px;padding:10px 0px; color:gray;background:white;border:1px solid gray">Annuler</button>
+            </div>
         </div>
     </div>
-
-    <script src="./desing.js"></script>
-    <script src="./index.js"></script>
+    <script type="module" src="desing.js"></script>
+    <!-- <script src="./index.js"></script> -->
 </body>
 
 </html>
