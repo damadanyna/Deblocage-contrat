@@ -60,19 +60,7 @@ function hidePopupValidation() {
 }
 
 
-function checkInput() {
-    if (host_.value == "" ||
-        agence_.value == "" ||
-        client_id_.value == "") {
-        btn.style.background = "#555";
-    } else {
-        if (code_.value.length > 6) {
-            btn.style.background = '#0b773b'
-            // appelerFonctionPHP();
-            // window.location.href = "./controller/getAccount.php";
-        }
-    }
-}
+
 
 find.addEventListener('click', () => {
     showPopupValidation();

@@ -113,8 +113,8 @@ require './data.php'
             </div>
         </div>
     </div>
-    <script type="module" src="desing.js"></script>
-    <!-- <script src="./index.js"></script> -->
+    <script type="module" src="./assets/js/desing.js"></script>
+    <script src="./assets/js/event.js"></script>
 </body>
 
 </html>

@@ -30,6 +30,7 @@ function appelerFonctionPHP() {
     xhr.send();
 }
 
+
 function envoyerDonnees() {
     var data = {
         host: host_.value,
