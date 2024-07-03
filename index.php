@@ -1,6 +1,4 @@
-<?php
-require './data.php'
-?>
+<?php require './data.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -15,7 +13,14 @@ require './data.php'
 
 <body>
     <div class="show-thing" id="show-thing">
-        <div class="masque" id="masque"></div>
+        <div class="masque" id="masque">
+            <div id="list_historique">
+                <span id="container_l">Historique </span>
+                <div id="c_liste" class="c_liste">
+
+                </div>
+            </div>
+        </div>
         <div class="c_thing">
         </div>
         <div class="icon_thing" id="icon_thing">
@@ -52,7 +57,6 @@ require './data.php'
             <div class="c_input">
                 <span class="label_in_">Base de Donnée</span>
                 <select name="proxi" id="host_" onmousedown="checkInput()" onkeyup="checkInput()">
-                    <option value="localhost">BDD Localhost</option>
                     <option value="192.168.1.21">BDD Teste</option>
                     <option value="192.168.1.253">BDD En Production</option>
                 </select>
@@ -75,8 +79,9 @@ require './data.php'
         </div>
     </div>
     <div class="popup_validation" id="popup_validation">
-        <div class="masque_validation" id="masque_validation"></div>
-        <div class="validation_form">
+        <div class="masque_validation" id="masque_validation">
+        </div>
+        <div id="result_list" class="validation_form" style="flex-direction:column">
             <div class="container___">
                 <div class="container_p_">
                     <p><u></u></p>
@@ -92,25 +97,46 @@ require './data.php'
             <h1>Validation du compte</h1>
             <div class="input_form">
                 <span class="label_in_">N° Compte</span>
-                <h3 id="v_code">50114</h3>
+                <h3 id="compte"></h3>
             </div>
             <div class="input_form">
                 <span class="label_in_">Blocage</span>
-                <h3 id="v_code">Non</h3>
+                <h3 id="blocage"></h3>
             </div>
             <div class="input_form">
                 <span class="label_in_">Nat blocage</span>
-                <h3 id="v_code">45</h3>
+                <h3 id="nat"></h3>
             </div>
             <div class="input_form">
                 <span class="label_in_">Solde Minimum</span>
-                <h3 id="v_code">1.200.000 ar</h3>
+                <h3 id="solde"></h3>
+            </div>
+            <div class="input_form">
+                <span class="label_in_">Motif</span>
+                <h3 id="motif"></h3>
             </div>
             <div class="" style="display: flex; flex-direction:column">
 
-                <button onclick="envoyerDonnees()" style="margin-top:30px;padding:10px 0px; width:300px;background:#0b773b;">Débloquer</button>
+                <button id="debloc_btn" style="margin-top:30px;padding:10px 0px; width:300px;background:#0b773b;">Débloquer</button>
                 <button id="annuler" style="margin-top:10px;padding:10px 0px; color:gray;background:white;border:1px solid gray">Annuler</button>
             </div>
+        </div>
+        <div id="not_found" class="validation_form" style="flex-direction:column">
+            <div class="container___">
+                <div class="container_p_">
+                    <p><u></u></p>
+                    <p><u></u></p>
+                    <p><u></u></p>
+                    <p><u></u></p>
+                    <p><u></u></p>
+                    <p><u></u></p>
+                    <p><u></u></p>
+                    <p><u></u></p>
+                </div>
+            </div>
+            <h1>Validation du compte</h1>
+            <span id="text_load">Chargement ... </span>
+
         </div>
     </div>
     <script type="module" src="./assets/js/desing.js"></script>
