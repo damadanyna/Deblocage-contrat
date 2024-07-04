@@ -17,45 +17,57 @@ function updata($con, $table, $vcode)
     }
 }
 
-function getData($config)
+function findAccount($config)
 {
     $conx = creat_cnx($config);
-    $vcode = $config["numCompte"];
-    try {
-        $stmt = $conx->prepare('SELECT * FROM contrat WHERE cpt_vcode=?');
-        $stmt->bind_param("s", $vcode);
-        $conx->begin_transaction();
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $rep = [
-                "cpt_vcode" => $row["cpt_vcode"],
-                "cpt_vblocage" => $row["cpt_vblocage"],
-                "cpt_vnatblocage" => $row["cpt_vnatblocage"],
-                "cpt_fsoldemin" => $row["cpt_fsoldemin"],
-                "cpt_vmotifblocage" => $row["cpt_vmotifblocage"]
-            ];
-            echo json_encode($rep);
-        } else {
-            echo json_encode([
-                "cpt_vcode" => "",
-                "cpt_vblocage" => "",
-                "cpt_vnatblocage" => "",
-                "cpt_fsoldemin" => "",
-                "cpt_vmotifblocage" => ""
-            ]);
-        }
-
-        $conx->commit();
-        $stmt->close();
-        $conx->close();
-    } catch (\Throwable $th) {
-        $conx->rollback();
-        echo "Error: " . $th->getMessage();
+    if ($conx->connect_error) {
+        die("Connection failed: " . $conx->connect_error);
     }
+
+    $vcode = (string)$config["numCompte"];
+    $query = "SELECT * FROM contrat WHERE cpt_vcode = ?";
+    $rep = "vide";
+
+    $stmt = $conx->prepare($query);
+    if (!$stmt) {
+        die("Statement preparation failed: " . $conx->error);
+    }
+
+    $stmt->bind_param("s", $vcode);
+
+    $conx->begin_transaction();
+    if (!$stmt->execute()) {
+        $conx->rollback();
+        die("Statement execution failed: " . $stmt->error);
+    }
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $rep = [
+            "cpt_vcode" => $row["cpt_vcode"],
+            "cpt_vblocage" => $row["cpt_vblocage"],
+            "cpt_vnatblocage" => $row["cpt_vnatblocage"],
+            "cpt_fsoldemin" => $row["cpt_fsoldemin"],
+            "cpt_vmotifblocage" => $row["cpt_vmotifblocage"]
+        ];
+        echo json_encode($rep);
+    } else {
+        $rep = [
+            "cpt_vcode" => "",
+            "cpt_vblocage" => "",
+            "cpt_vnatblocage" => "",
+            "cpt_fsoldemin" => "",
+            "cpt_vmotifblocage" => ""
+        ];
+        echo json_encode($rep);
+    }
+
+    $result->free_result(); // Libérer les résultats avant de poursuivre
+    $conx->commit();
+    $stmt->close();
+    $conx->close();
 }
+
 
 function insertHistory($data)
 {
@@ -167,8 +179,8 @@ function creat_cnx($config)
 // Gestion de la requête
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
     $data = json_decode(file_get_contents('php://input'), true);
-    if ($_GET['action'] === 'getData') {
-        getData($data);
+    if ($_GET['action'] === 'findAccount') {
+        findAccount($data);
     } else if ($_GET['action'] === 'insertHistory') {
         insertHistory($data);
     } else if ($_GET['action'] === 'updateContrat') {

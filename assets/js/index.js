@@ -6,10 +6,14 @@ var motif = document.getElementById('motif')
 var result_list = document.getElementById('result_list');
 var not_found = document.getElementById('not_found');
 var historique_c = document.getElementById('c_liste');
+var notification = document.getElementById('notification');
+var not_text = document.getElementById('not_text');
+
 
 var history_data = [];
 
-function findAccount(data, config) {
+function findAccount(config) {
+    // console.log(config);
     var xhr = new XMLHttpRequest();
     result_list.style.display = "none";
     not_found.style.display = "flex";
@@ -17,21 +21,23 @@ function findAccount(data, config) {
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                console.log(xhr.responseText);
-                if (!xhr.responseText.includes('<')) {
-                    var data = JSON.parse(xhr.responseText);
-                    if (data.cpt_vcode != '') {
-                        result_list.style.display = "flex"
-                        not_found.style.display = "none"
-                        compte.innerText = data.cpt_vcode;
-                        blocage.innerText = data.cpt_vblocage;
-                        nat.innerText = data.cpt_vnatblocage;
-                        solde.innerText = data.cpt_fsoldemin;
-                        motif.innerText = data.cpt_vmotifblocage;
-                    } else {
-                        result_list.style.display = "none"
-                        not_found.style.display = "flex"
-                        not_found.innerHTML = " Ce compte n'existe pas";
+                // console.log(xhr.responseText);
+                if (xhr.responseText !== '') {
+                    if (!xhr.responseText.includes('<')) {
+                        var data = JSON.parse(xhr.responseText);
+                        if (data.cpt_vcode != '') {
+                            result_list.style.display = "flex"
+                            not_found.style.display = "none"
+                            compte.innerText = data.cpt_vcode;
+                            blocage.innerText = data.cpt_vblocage;
+                            nat.innerText = data.cpt_vnatblocage;
+                            solde.innerText = data.cpt_fsoldemin;
+                            motif.innerText = data.cpt_vmotifblocage;
+                        } else {
+                            result_list.style.display = "none"
+                            not_found.style.display = "flex"
+                            not_found.innerHTML = " Ce compte n'existe pas";
+                        }
                     }
                 } else {
                     result_list.style.display = "none"
@@ -39,11 +45,13 @@ function findAccount(data, config) {
                     not_found.innerHTML = " Ce compte n'existe pas";
                 }
             } else {
-                console.error(`Error: ${xhr.status}`);
+                result_list.style.display = "none"
+                not_found.style.display = "flex"
+                not_found.innerHTML = " Ce compte n'existe pas";
             }
         }
     };
-    xhr.open("POST", "./controller/getAccount.php?action=getData", true);
+    xhr.open("POST", "./controller/getAccount.php?action=findAccount", true);
     xhr.setRequestHeader("Content-Type", "application/json");
     var donnees = JSON.stringify(config);
     xhr.send(donnees);
@@ -73,7 +81,11 @@ function envoyerDonnees() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                window.location.reload()
+                notification.style.animation = 'showToggle 0.8s forwards'
+                not_text.innerText = compte.innerText
+                setTimeout(() => {
+                    window.location.reload()
+                }, 3500);
             } else {
                 console.error(`Error: ${xhr.status}`);
             }

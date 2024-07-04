@@ -90,7 +90,7 @@ find.addEventListener('click', () => {
                 dataBase: agence_.value,
                 numCompte: num_compte_.value,
             };
-            findAccount('Dany', data);
+            findAccount(data);
         }
     }
 })

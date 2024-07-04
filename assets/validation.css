@@ -40,7 +40,6 @@ h3 {
   justify-content: space-between;
   margin-top: -40px;
 }
-
 .anim-opacityIn {
   animation: fadeIn 0.5s forwards;
 }

@@ -12,6 +12,11 @@
 </head>
 
 <body>
+
+    <div id="notification" class="">
+        <span id="title">Déblocage Faite</span>
+        <span id="not_text"></span>
+    </div>
     <div class="show-thing" id="show-thing">
         <div class="masque" id="masque">
             <div id="list_historique">
@@ -58,6 +63,7 @@
                 <span class="label_in_">Base de Donnée</span>
                 <select name="proxi" id="host_" onmousedown="checkInput()" onkeyup="checkInput()">
                     <option value="192.168.1.21">BDD Teste</option>
+                    <option value="192.168.1.216">BDD prod</option>
                     <option value="192.168.1.253">BDD En Production</option>
                 </select>
             </div>
