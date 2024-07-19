@@ -28,8 +28,8 @@
                         <span id="">Archive </span>
                     </div>
                     <div onclick="tooglepopup(true)" title="Envoyer cette liste vers le DSI" class=" rounded-md py-1 px-3" style="color:  white; background:#16a34a;">
-                        <span>Télécharger</span>
-                        <i class=" fas fa-download "></i>
+                        <span>Générer SQL</span>
+                        <i class=" fas fa-database"></i>
                     </div>
                 </div>
                 <div id="c_liste" class="c_liste">
@@ -171,9 +171,9 @@
         <div class="flex flex-col bg-white rounded-lg border px-3 py-4 w-[27rem] ">
             <div class="flex items-flex">
                 <i class="fas fa-exclamation text-xl bg-green-600 text-white px-3 rounded-full mr-2"></i>
-                <span class=" text-green-600 text-xl font-bold">Télécharger?</span>
+                <span class=" text-green-600 text-xl font-bold">Générer et Télécharger?</span>
             </div>
-            <span class="text-base mt-3">Souhaitez-vous Télécharger cette liste de comptes en SQL pour procéder au déblocage des contrats ?</span>
+            <span class="text-base mt-3">Souhaitez-vous Générer cette liste de comptes en SQL pour procéder au déblocage des contrats ?</span>
             <div class="flex flex-row w-full mt-3 justify-end">
                 <button onclick="tooglepopup(false)" class=" text-sm uppercase px-3 py-1 bg-green-600 text-white">Non</button>
                 <divx onclick="sendIt()" class=" ml-2 rounded-lg text-sm uppercase px-3 py-1 border border-stone-400 text-stone-400">
