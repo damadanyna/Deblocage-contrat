@@ -41,7 +41,7 @@ body {
 h1 {
   font-size: 25px;
   padding: 10px 0px;
-  color: #0b773b;
+  color: #16a34a;
   text-transform: uppercase;
   font: bold;
 }
@@ -58,11 +58,11 @@ select {
 }
 select:focus {
   border: none;
-  border-bottom: 2px solid #0b773b;
+  border-bottom: 2px solid #16a34a;
 }
 .c_input input:focus-within {
   border: none;
-  border-bottom: 2px solid #0b773b;
+  border-bottom: 2px solid #16a34a;
 }
 .c_input input {
   padding: 7px 15px;
@@ -95,7 +95,7 @@ button {
   font-weight: 800;
 }
 .c_pwd span {
-  color: #0b773b;
+  color: #16a34a;
 }
 
 .label_in_ {
@@ -185,7 +185,7 @@ u {
 
 #notification {
   position: absolute;
-  background: #0b773b;
+  background: #16a34a;
   padding: 7px 20px;
   color: white;
   top: 20px;
@@ -225,6 +225,22 @@ u {
   border-radius: 5px; /* Arrondi du thumb */
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #0b773b; /* Couleur du thumb */
+  background-color: #16a34a; /* Couleur du thumb */
   border-radius: 5px; /* Arrondi du thumb */
+}
+
+#c_result {
+  position: relative;
+}
+#list_result {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 240px;
+  margin-top: 10px;
+  padding: 7px 10px;
+  box-shadow: 0px 0px 15px #30303079;
+  border-radius: 10px;
+  font-size: 13px;
 }

@@ -1,4 +1,4 @@
-import { findAccount, updateContrat, getHistorique, envoyerDonnees } from './index.js';
+import { findAccount, getHistorique, checkLocal, tableauDATA } from './index.js';
 var menu = document.getElementById('icon_thing');
 var popup = document.getElementById('show-thing');
 var masque = document.getElementById('masque');
@@ -6,14 +6,14 @@ var bar_h = document.getElementById('bar_h');
 var bar_v = document.getElementById('bar_v');
 var c_popup = document.getElementById('popup_validation')
 var popup_ = document.getElementById('masque_validation');
-var annuler_ = document.getElementById('annuler');
 var find = document.getElementById('btn_');
-var debloc_btn = document.getElementById('debloc_btn');
+var save_btn = document.getElementById('save_btn');
+// var tableauDATA = [];
 
-
-const host_ = document.getElementById('host_');
+const host_ = '192.168.1.253';
 const agence_ = document.getElementById('agence_');
 const num_compte_ = document.getElementById('code_');
+const rib_ = document.getElementById('rib_');
 const btn = document.getElementById('btn_');
 // show-thing
 
@@ -24,10 +24,12 @@ menu.addEventListener('click', () => {
     masque.style.zIndex = 200;
     masque.style.opacity = 1;
     menu.style.zIndex = 0;
-    menu.style.borderRight = '1px solid #0b773b';
+    menu.style.borderRight = '1px solid #16a34a';
 })
 
-// envoyerDonnees()
+
+
+// enregistrer()
 masque.addEventListener('click', () => {
     popup.classList.add('out-anim-expand')
     popup.style.background = 'transparent';
@@ -39,10 +41,6 @@ masque.addEventListener('click', () => {
 })
 
 popup_.addEventListener('click', () => {
-    hidePopupValidation()
-
-})
-annuler_.addEventListener('click', () => {
     hidePopupValidation()
 
 })
@@ -63,38 +61,130 @@ function hidePopupValidation() {
     }, 500);
 }
 
-debloc_btn.addEventListener('click', () => {
-    var data = {
-        host: host_.value,
-        dataBase: agence_.value,
-        numCompte: num_compte_.value,
-    };
-    updateContrat(data);
-    envoyerDonnees();
-    getHistorique();
+save_btn.addEventListener('click', () => {
+    // var data = {
+    //     host: host_,
+    //     dataBase: agence_.value,
+    //     numCompte: num_compte_.value,
+    //     rib: rib_.value,
+    // };
+    setTimeout(() => {
+        console.log(tableauDATA);
+        var tableauDATA_ = checkLocal();
+        tableauDATA_.push(tableauDATA);
+        localStorage.setItem('*-*', JSON.stringify(tableauDATA))
+        notification.style.animation = 'showToggle 0.8s forwards'
+        setTimeout(() => {
+            window.location.reload()
+
+        }, 100);
+    }, 100);
+    // enregistrer(tableauDATA);
+    // updateContrat(data);
+    // enregistrer();
+    // getHistorique();
 })
 
 
 
 find.addEventListener('click', () => {
-    if (host_.value == "" ||
+    if (host_ == "" ||
         agence_.value == "" ||
-        client_id_.value == "") {
+        rib_.value == "" ||
+        num_compte_.value == "") {
         btn.style.background = "#555";
     } else {
         if (code_.value.length > 6) {
-            btn.style.background = '#0b773b'
+            btn.style.background = '#16a34a'
             showPopupValidation();
             var data = {
-                host: host_.value,
+                host: host_,
                 dataBase: agence_.value,
                 numCompte: num_compte_.value,
+                rib: rib_.value,
             };
             findAccount(data);
+
         }
     }
 })
 
+find.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        if (host_ == "" ||
+            agence_.value == "" ||
+            rib_.value == "" ||
+            num_compte_.value == "") {
+            btn.style.background = "#555";
+        } else {
+            if (code_.value.length > 6) {
+                btn.style.background = '#16a34a'
+                showPopupValidation();
+                var data = {
+                    host: host_,
+                    dataBase: agence_.value,
+                    numCompte: num_compte_.value,
+                    rib: rib_.value,
+                };
+                findAccount(data);
+
+            }
+        }
+    }
+})
+num_compte_.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        if (host_ == "" ||
+            agence_.value == "" ||
+            rib_.value == "" ||
+            num_compte_.value == "") {
+            btn.style.background = "#555";
+        } else {
+            if (code_.value.length > 6) {
+                btn.style.background = '#16a34a'
+                showPopupValidation();
+                var data = {
+                    host: host_,
+                    dataBase: agence_.value,
+                    numCompte: num_compte_.value,
+                    rib: rib_.value,
+                };
+                findAccount(data);
+
+            }
+        }
+    }
+})
+
+rib_.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        if (host_ == "" ||
+            agence_.value == "" ||
+            rib_.value == "" ||
+            num_compte_.value == "") {
+            btn.style.background = "#555";
+        } else {
+            if (code_.value.length > 6) {
+                btn.style.background = '#16a34a'
+                showPopupValidation();
+                var data = {
+                    host: host_,
+                    dataBase: agence_.value,
+                    numCompte: num_compte_.value,
+                    rib: rib_.value,
+                };
+                findAccount(data);
+
+            }
+        }
+    }
+})
+
+
+// tableauDATA = checkLocal();
 window.addEventListener('load', () => {
     getHistorique();
 })
+
+// console.log(tableauDATA);
+

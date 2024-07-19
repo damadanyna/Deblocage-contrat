@@ -19,50 +19,41 @@ function updata($con, $table, $vcode)
 
 function findAccount($config)
 {
+    $vcode = "%" .  $config["numCompte"] . "%";
+    $rib = "%" .  $config["rib"] . "%";
     $conx = creat_cnx($config);
-    if ($conx->connect_error) {
-        die("Connection failed: " . $conx->connect_error);
-    }
-
-    $vcode = (string)$config["numCompte"];
-    $query = "SELECT * FROM contrat WHERE cpt_vcode = ?";
+    $query = "SELECT * FROM contrat WHERE cpt_vcode LIKE  ?  and cpt_vrib like ? ";
     $rep = "vide";
 
     $stmt = $conx->prepare($query);
-    if (!$stmt) {
-        die("Statement preparation failed: " . $conx->error);
-    }
-
-    $stmt->bind_param("s", $vcode);
+    $stmt->bind_param("ss", $vcode, $rib);
 
     $conx->begin_transaction();
     if (!$stmt->execute()) {
         $conx->rollback();
         die("Statement execution failed: " . $stmt->error);
     }
+
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $rep = [
             "cpt_vcode" => $row["cpt_vcode"],
-            "cpt_vblocage" => $row["cpt_vblocage"],
-            "cpt_vnatblocage" => $row["cpt_vnatblocage"],
-            "cpt_fsoldemin" => $row["cpt_fsoldemin"],
-            "cpt_vmotifblocage" => $row["cpt_vmotifblocage"]
+            "cpt_vlib" => $row["cpt_vlib"],
+            "cpt_vrib" => $row["cpt_vrib"],
+            "cpt_vbanque" => $row["cpt_vbanque"],
         ];
-        echo json_encode($rep);
     } else {
         $rep = [
             "cpt_vcode" => "",
-            "cpt_vblocage" => "",
-            "cpt_vnatblocage" => "",
-            "cpt_fsoldemin" => "",
-            "cpt_vmotifblocage" => ""
+            "cpt_vlib" => "",
+            "cpt_vrib" => "",
         ];
-        echo json_encode($rep);
     }
 
-    $result->free_result(); // Libérer les résultats avant de poursuivre
+    echo json_encode($rep);
+
+    $result->free();
     $conx->commit();
     $stmt->close();
     $conx->close();
@@ -72,8 +63,8 @@ function findAccount($config)
 function insertHistory($data)
 {
     $config = [
-        "host" => "192.168.1.216",
-        "user" => "itdev",
+        "host" => "192.168.1.21",
+        "user" => "root",
         "pwd" => "clvohama",
         "dataBase" => 'config'
     ];
@@ -92,43 +83,44 @@ function insertHistory($data)
         echo "Error: " . $th->getMessage();
     }
 }
-function updateContrat($config)
-{
-    $cpt_vmotif = $config["cpt_vmotifblocage"];
-    $cpt_soldmin = $config["cpt_fsoldemin"];
-    $blocate = $config["cpt_vblocage"];
-    // echo json_encode($config);
-    $config = [
-        "host" => $config['host'],
-        "dataBase" => $config['dataBase']
-    ];
-    $conx = creat_cnx($config);
-    try {
-        $stmt = $conx->prepare('UPDATE contrat SET cpt_vblocage= ?, cpt_fsoldemin= ?, cpt_vmotifblocage= ?');
-        $stmt->bind_param("sss", $blocate, $cpt_soldmin, $cpt_vmotif);
-        $conx->begin_transaction();
-        $stmt->execute();
-        echo json_encode(["status" => "success", "data" => "", "message" => "Update successful!"]);
-        $conx->commit();
-        $stmt->close();
-        $conx->close();
-    } catch (\Throwable $th) {
-        $conx->rollback();
-        echo "Error: " . $th->getMessage();
-    }
-}
+
+// function updateContrat($config)
+// {
+//     $cpt_vmotif = $config["cpt_vmotifblocage"];
+//     $cpt_soldmin = $config["cpt_fsoldemin"];
+//     $blocate = $config["cpt_vblocage"];
+//     // echo json_encode($config);
+//     $config = [
+//         "host" => $config['host'],
+//         "dataBase" => $config['dataBase']
+//     ];
+//     $conx = creat_cnx($config);
+//     try {
+//         $stmt = $conx->prepare('UPDATE contrat SET cpt_vblocage= ?, cpt_fsoldemin= ?, cpt_vmotifblocage= ?');
+//         $stmt->bind_param("sss", $blocate, $cpt_soldmin, $cpt_vmotif);
+//         $conx->begin_transaction();
+//         $stmt->execute();
+//         echo json_encode(["status" => "success", "data" => "", "message" => "Update successful!"]);
+//         $conx->commit();
+//         $stmt->close();
+//         $conx->close();
+//     } catch (\Throwable $th) {
+//         $conx->rollback();
+//         echo "Error: " . $th->getMessage();
+//     }
+// }
 
 function getHistory()
 {
     $config = [
-        "host" => "192.168.1.216",
-        "user" => "itdev",
+        "host" => "192.168.1.21",
+        "user" => "root",
         "pwd" => "clvohama",
         "dataBase" => 'config'
     ];
     $conx = creat_cnx($config);
     try {
-        $stmt = $conx->prepare('SELECT * FROM hisorique_deb  ORDER BY date_insertion DESC LIMIT 100 ');
+        $stmt = $conx->prepare('SELECT * FROM hisorique_deb WHERE envoie=0 ORDER BY date_insertion DESC   ');
         $conx->begin_transaction();
         $stmt->execute();
         $result = $stmt->get_result();
@@ -184,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
     } else if ($_GET['action'] === 'insertHistory') {
         insertHistory($data);
     } else if ($_GET['action'] === 'updateContrat') {
-        updateContrat($data);
+        // updateContrat($data);
     }
 }
 
