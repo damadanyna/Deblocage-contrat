@@ -79,7 +79,7 @@
             </div> -->
             <div class="c_input">
                 <span class="label_in_">Code agence</span>
-                <select name="db_name" id="agence_" onkeyup="checkInput()">
+                <select onchange="saveState()" name="db_name" id="agence_" onkeyup="checkInput()">
                     <?php foreach ($agence  as $key => $value) : ?>
                         <option value="<?= $value['label'] ?>"><?= $value['agence'] ?></option>
                     <?php endforeach;  ?>

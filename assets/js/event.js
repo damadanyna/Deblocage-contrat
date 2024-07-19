@@ -31,7 +31,7 @@ function tooglepopup(val) {
     }
 }
 function sendIt() {
-    var temp = checkLocal();
+    var temp = checkLocal('*-*');
     var sql = "";
     if (temp.length != 0) {
         console.log(temp);
@@ -55,10 +55,10 @@ function showPopup() {
     menu.style.zIndex = 0;
     menu.style.borderRight = '1px solid #16a34a';
 }
-function checkLocal() {
+function checkLocal(key) {
     var local = window.localStorage;
-    if (local.getItem('*-*')) {
-        return JSON.parse(local.getItem('*-*'))
+    if (local.getItem(key)) {
+        return JSON.parse(local.getItem(key))
     } else {
         return [];
     }
@@ -86,3 +86,9 @@ function download(data) {
     window.localStorage.setItem('*-*', []);
     tooglepopup(false)
 };
+
+function saveState() {
+    window.localStorage.setItem('agence', JSON.stringify(agence_.value))
+}
+agence_.value = checkLocal('agence')
+
